@@ -1,26 +1,34 @@
 @extends('layout')
 @section('title', 'Dodaj kontakt')
 @section('content')
+@if($errors->any())
+<div class="alert alert-danger" role="alert">
+    @foreach($errors->all() as $message)
+    <li>{{$message}}<br>
+        @endforeach
+</div>
+@endif
 <form action="{{route('add')}}" method="POST">
     <div class="form-group">
         <label for="name">Imię</label>
-        <input type="text" class="form-control" id="name" name="name">
+        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
     </div>
     <div class="form-group">
         <label for="surname">Nazwisko</label>
-        <input type="text" class="form-control" id="surname" name="surname">
+        <input type="text" class="form-control" id="surname" name="surname" value="{{ old('surname') }}">
     </div>
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email">
+        <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
     </div>
     <div class="form-group">
         <label for="phone">Telefon</label>
-        <input type="text" class="form-control" id="phone" name="phone">
+        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}">
     </div>
     <div class="form-group">
         <label for="birthday">Data urodzenia</label>
-        <input type="text" class="form-control" id="birthday" name="birthday">
+        <input type="text" class="form-control" id="birthday" name="birthday" value="{{ old('birthday') }}">
+        <small id="birthdayHelp" class="form-text text-muted">YYYY-MM-DD</small>
     </div>
     @csrf
     <button type="submit" class="btn btn-primary">Dodaj kontakt</button>

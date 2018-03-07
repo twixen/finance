@@ -14,7 +14,7 @@ class AccessController extends Controller {
         if (auth()->attempt(['email' => $inputs['email'], 'password' => $inputs['password']])) {
             return redirect()->intended();
         } else {
-            return redirect()->route('login');
+            return redirect()->route('login')->with(['error' => 'Dane logowania są niepoprawne']);
         }
     }
 

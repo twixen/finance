@@ -1,6 +1,11 @@
 @extends('layout')
 @section('title', 'Logowanie')
 @section('content')
+@if(session('error'))
+<div class="alert alert-danger" role="alert">
+    <li>{{session('error')}}<br>
+</div>
+@endif
 <form action="{{route('login')}}" method="POST">
     <div class="form-group">
         <label for="email">Email</label>

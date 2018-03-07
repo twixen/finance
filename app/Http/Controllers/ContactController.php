@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use Validator;
+use Illuminate\Support\Facades\Input;
 
 class ContactController extends Controller {
 
@@ -17,6 +19,13 @@ class ContactController extends Controller {
 
     public function store(Request $request) {
         $inputs = $request->only('name', 'surname', 'email', 'phone', 'birthday');
+        Validator::make($inputs, [
+            'name' => 'required|alpha',
+            'surname' => 'required|alpha',
+            'email' => 'required|email|unique:contacts',
+            'phone' => 'required|numeric',
+            'birthday' => 'required|date|date_format:Y-m-d',
+        ])->validate();
         $contact = new Contact();
         $contact->name = $inputs['name'];
         $contact->surname = $inputs['surname'];
@@ -37,6 +46,13 @@ class ContactController extends Controller {
 
     public function update(Request $request, $contact) {
         $inputs = $request->only('name', 'surname', 'email', 'phone', 'birthday');
+        Validator::make($inputs, [
+            'name' => 'required|alpha',
+            'surname' => 'required|alpha',
+            'email' => 'required|email|unique:contacts,email,' . $contact->id,
+            'phone' => 'required|numeric',
+            'birthday' => 'required|date|date_format:Y-m-d',
+        ])->validate();
         $contact->name = $inputs['name'];
         $contact->surname = $inputs['surname'];
         $contact->email = $inputs['email'];
